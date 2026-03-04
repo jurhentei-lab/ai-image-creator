@@ -100,40 +100,6 @@ export const ImageCreator = () => {
         </div>
       </div>
 
-      {/* <div className="flex flex-col gap-2">
-        <div className="flex gap-2 items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M21 15L17.914 11.914C17.5389 11.5391 17.0303 11.3284 16.5 11.3284C15.9697 11.3284 15.4611 11.5391 15.086 11.914L6 21M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3ZM11 9C11 10.1046 10.1046 11 9 11C7.89543 11 7 10.1046 7 9C7 7.89543 7.89543 7 9 7C10.1046 7 11 7.89543 11 9Z"
-              stroke="#09090B"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <p className="font-semibold text-xl">Result</p>
-        </div>
-
-        {!resultImage ? (
-          <p className="text-sm text-gray-600">
-            First, enter your text to generate an image.
-          </p>
-        ) : (
-          <div className="relative w-145 h-full rounded-lg overflow-hidden border">
-            <img
-              src={resultImage}
-              alt="Generated food"
-              className="object-cover w-full h-full"
-            />
-          </div>
-        )}
-      </div> */}
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 items-center">
           <svg
@@ -155,13 +121,13 @@ export const ImageCreator = () => {
         </div>
 
         <div className="relative w-145 h-80 rounded-lg overflow-hidden border bg-gray-50">
-          {isGenerating && <RunningManLoader />}
-
-          {!isGenerating && resultImage && (
+          {resultImage && (
             <img
               src={resultImage}
               alt="Generated food"
-              className="object-cover w-full h-full"
+              className={`object-cover w-full h-full transition-all duration-300 ${
+                isGenerating ? "scale-[1.02] blur-[1.2px] opacity-60" : ""
+              }`}
             />
           )}
 
@@ -169,6 +135,12 @@ export const ImageCreator = () => {
             <p className="text-sm text-gray-600 flex items-center justify-center h-full">
               First, enter your text to generate an image.
             </p>
+          )}
+
+          {isGenerating && (
+            <div className="absolute inset-0 bg-white/65 backdrop-blur-[1px]">
+              <RunningManLoader />
+            </div>
           )}
         </div>
       </div>

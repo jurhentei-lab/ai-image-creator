@@ -1,26 +1,28 @@
 "use client";
 
-const RunningManLoader = () => {
-  return (
-    <div className="flex flex-col items-center justify-center h-full gap-3">
-      <svg
-        width="64"
-        height="64"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="animate-run text-gray-700"
-      >
-        <circle cx="13" cy="4" r="2" />
-        <path d="M9 22l1-7-3-3 2-4" />
-        <path d="M15 22l-1-5 3-3" />
-        <path d="M7 10l4 2 3-3" />
-      </svg>
+type RunningManLoaderProps = {
+  title?: string;
+  subtitle?: string;
+};
 
-      <p className="text-sm text-gray-500 animate-pulse">Generating image...</p>
+const RunningManLoader = ({
+  title = "Generating your food image",
+  subtitle = "Please wait a few seconds",
+}: RunningManLoaderProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-3 px-4">
+      <div className="h-14 w-14 rounded-full border-2 border-gray-200 border-t-gray-800 animate-spin" />
+
+      <div className="text-center">
+        <p className="text-sm font-medium text-gray-800">{title}</p>
+        <p className="text-xs text-gray-500">{subtitle}</p>
+      </div>
+
+      <div className="flex items-center gap-1 pt-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-gray-400 animate-dot-bounce [animation-delay:-0.2s]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-gray-500 animate-dot-bounce [animation-delay:-0.1s]" />
+        <span className="h-1.5 w-1.5 rounded-full bg-gray-600 animate-dot-bounce" />
+      </div>
     </div>
   );
 };

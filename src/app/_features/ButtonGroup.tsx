@@ -16,7 +16,7 @@ export const ButtonGroup = () => {
         <Button
           variant="ghost"
           onClick={handleChangeAnalysis}
-          className={`w-30.75 h-7 ${
+          className={`w-30.75 h-7 transition-all duration-200 ${
             activeTab === "analysis"
               ? "bg-white shadow-sm text-black"
               : "text-gray-400"
@@ -27,7 +27,7 @@ export const ButtonGroup = () => {
         <Button
           variant="ghost"
           onClick={handleChangeRecognition}
-          className={`w-43 h-7 ${
+          className={`w-43 h-7 transition-all duration-200 ${
             activeTab === "recognition"
               ? "bg-white shadow-sm text-black"
               : "text-gray-400"
@@ -38,7 +38,7 @@ export const ButtonGroup = () => {
         <Button
           variant="ghost"
           onClick={handleChangeCreator}
-          className={`w-29.25 h-7 ${
+          className={`w-29.25 h-7 transition-all duration-200 ${
             activeTab === "creator"
               ? "bg-white shadow-sm text-black"
               : "text-gray-400"

@@ -1,10 +1,12 @@
 "use client";
 import type { ReactNode } from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 // const HomeContext = createContext(null) //JS
 
+type HomeTab = "analysis" | "recognition" | "creator";
+
 type HomeContextType = {
-  activeTab: string;
+  activeTab: HomeTab;
   handleChangeAnalysis: () => void;
   handleChangeRecognition: () => void;
   handleChangeCreator: () => void;
@@ -24,20 +26,37 @@ export const useHomeContext = () => {
 // export const HomeProvider = ({children})=>{}
 
 export const HomeProvider = ({ children }: { children: ReactNode }) => {
-  const [activeTab, setActiveTab] = useState("analysis");
-  const handleChangeAnalysis = () => setActiveTab("analysis");
-  const handleChangeRecognition = () => setActiveTab("recognition");
-  const handleChangeCreator = () => setActiveTab("creator");
+  const [activeTab, setActiveTab] = useState<HomeTab>("analysis");
+
+  const handleChangeAnalysis = useCallback(() => {
+    setActiveTab("analysis");
+  }, []);
+
+  const handleChangeRecognition = useCallback(() => {
+    setActiveTab("recognition");
+  }, []);
+
+  const handleChangeCreator = useCallback(() => {
+    setActiveTab("creator");
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
+      activeTab,
+      handleChangeAnalysis,
+      handleChangeCreator,
+      handleChangeRecognition,
+    }),
+    [
+      activeTab,
+      handleChangeAnalysis,
+      handleChangeCreator,
+      handleChangeRecognition,
+    ]
+  );
 
   return (
-    <HomeContext.Provider
-      value={{
-        activeTab,
-        handleChangeAnalysis,
-        handleChangeCreator,
-        handleChangeRecognition,
-      }}
-    >
+    <HomeContext.Provider value={contextValue}>
       {children}
     </HomeContext.Provider>
   );
