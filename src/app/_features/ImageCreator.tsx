@@ -122,10 +122,13 @@ export const ImageCreator = () => {
 
         <div className="relative w-145 h-80 rounded-lg overflow-hidden border bg-gray-50">
           {resultImage && (
-            <img
+            <Image
               src={resultImage}
               alt="Generated food"
-              className={`object-cover w-full h-full transition-all duration-300 ${
+              fill
+              unoptimized
+              sizes="580px"
+              className={`object-cover transition-all duration-300 ${
                 isGenerating ? "scale-[1.02] blur-[1.2px] opacity-60" : ""
               }`}
             />

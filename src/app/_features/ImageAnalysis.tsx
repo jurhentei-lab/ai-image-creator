@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import Image from "next/image";
 import { useTypewriter } from "@/hooks/useTypeWriter";
 
@@ -14,12 +15,10 @@ export const ImageAnalysis = () => {
 
   const handleClick = () => {
     setIsActive(true);
-    setTimeout(() => {
-      setIsActive(false);
-    }, 200);
+    setTimeout(() => setIsActive(false), 200);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setSelectedFile(file);
@@ -43,11 +42,7 @@ export const ImageAnalysis = () => {
   };
 
   useEffect(() => {
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
-    };
+    return () => previewUrl && URL.revokeObjectURL(previewUrl);
   }, [previewUrl]);
 
   const handleGenerate = async () => {
@@ -59,13 +54,10 @@ export const ImageAnalysis = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        "https://ai-test-back.onrender.com/image-analysis",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const res = await fetch("https://ai-test-back.onrender.com/image-analysis", {
+        method: "POST",
+        body: formData,
+      });
 
       const data = await res.json();
       setResultText(data.content);
@@ -82,7 +74,6 @@ export const ImageAnalysis = () => {
         <div className="flex gap-2">
           <p className="font-semibold text-xl">Image analysis</p>
         </div>
-
         <button
           onClick={handleClick}
           className="w-12 h-10 flex items-center justify-center rounded-md border border-[#E4E4E7]"
@@ -96,11 +87,9 @@ export const ImageAnalysis = () => {
           />
         </button>
       </div>
-
       <p className="text-[#71717A] text-sm">
         Upload a food photo, and AI will detect the ingredients.
       </p>
-
       {!previewUrl ? (
         <label
           htmlFor="file-upload"
@@ -127,7 +116,6 @@ export const ImageAnalysis = () => {
           </button>
         </div>
       )}
-
       <div className="flex justify-end mt-4">
         <button
           onClick={handleGenerate}
@@ -162,19 +150,16 @@ export const ImageAnalysis = () => {
           </svg>
           <h3 className="text-lg font-semibold">Here is the summary</h3>
         </div>
-
         {loading && (
           <p className="text-sm text-gray-500 animate-pulse">
             Analyzing image...
           </p>
         )}
-
         {!loading && !resultText && (
           <p className="text-sm text-gray-500">
             First, upload an image to analyze ingredients.
           </p>
         )}
-
         {!loading && resultText && (
           <div className="bg-gray-50 border rounded-md p-3 text-sm whitespace-pre-wrap font-mono">
             {typedText}
