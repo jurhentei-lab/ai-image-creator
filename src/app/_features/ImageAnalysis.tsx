@@ -42,7 +42,11 @@ export const ImageAnalysis = () => {
   };
 
   useEffect(() => {
-    return () => previewUrl && URL.revokeObjectURL(previewUrl);
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
   }, [previewUrl]);
 
   const handleGenerate = async () => {
